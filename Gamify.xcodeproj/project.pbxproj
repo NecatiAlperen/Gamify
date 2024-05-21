@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B6C5F2C2BFC23A800F908CE /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6C5F2B2BFC23A800F908CE /* UIView + Extension.swift */; };
 		3BD575522BFA4AB8008C09D1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3BD575512BFA4AB8008C09D1 /* Alamofire */; };
 		3BD575542BFA4C18008C09D1 /* GameDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD575532BFA4C18008C09D1 /* GameDetail.swift */; };
 		3BD575562BFA5092008C09D1 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD575552BFA5092008C09D1 /* WebService.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B6C5F2B2BFC23A800F908CE /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		3BD575532BFA4C18008C09D1 /* GameDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetail.swift; sourceTree = "<group>"; };
 		3BD575552BFA5092008C09D1 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		3BD575582BFA653F008C09D1 /* GamesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesCell.swift; sourceTree = "<group>"; };
@@ -61,6 +63,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B6C5F2A2BFC239200F908CE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3B6C5F2B2BFC23A800F908CE /* UIView + Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		3BD5754F2BFA4A9E008C09D1 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +152,7 @@
 		3BDBF5B52BF8308B00C2BC03 /* Gamify */ = {
 			isa = PBXGroup;
 			children = (
+				3B6C5F2A2BFC239200F908CE /* Extensions */,
 				3BD5755C2BFA77BA008C09D1 /* Modules */,
 				3BD5754F2BFA4A9E008C09D1 /* Services */,
 				3BDBF5D82BF83A5000C2BC03 /* Resources */,
@@ -270,6 +281,7 @@
 				3BD575622BFA783E008C09D1 /* GameDetailViewController.swift in Sources */,
 				3BDBF5C12BF8308B00C2BC03 /* Gamify.xcdatamodeld in Sources */,
 				3BDBF5BB2BF8308B00C2BC03 /* ViewController.swift in Sources */,
+				3B6C5F2C2BFC23A800F908CE /* UIView + Extension.swift in Sources */,
 				3BDBF5D62BF834CA00C2BC03 /* FavoritesViewController.swift in Sources */,
 				3BDBF5D22BF8335500C2BC03 /* MainTabbarController.swift in Sources */,
 				3BD575592BFA653F008C09D1 /* GamesCell.swift in Sources */,

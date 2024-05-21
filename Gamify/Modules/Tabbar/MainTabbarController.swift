@@ -11,7 +11,6 @@ final class MainTabbarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTabbar()
     }
     
@@ -26,7 +25,4 @@ final class MainTabbarController: UITabBarController {
         tabBar.tintColor = .label
         setViewControllers([vcFirst,vcSecond], animated: true)
     }
-
-    
-
 }

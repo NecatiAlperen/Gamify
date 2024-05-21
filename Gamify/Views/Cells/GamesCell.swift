@@ -13,8 +13,8 @@ class GamesCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true // Sabit genişlik ayarlandı
-        imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true // Sabit yükseklik ayarlandı
+        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true 
+        imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
         return imageView
     }()
     
@@ -88,7 +88,6 @@ class GamesCell: UICollectionViewCell {
             gameReleasedLabel.text = "Released: \(game.released ?? "N/A")"
             
             if let imageUrl = game.backgroundImage, let url = URL(string: imageUrl) {
-                // Load image asynchronously
                 DispatchQueue.global().async {
                     if let data = try? Data(contentsOf: url) {
                         DispatchQueue.main.async {

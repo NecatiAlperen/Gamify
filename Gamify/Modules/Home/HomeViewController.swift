@@ -31,6 +31,7 @@ final class HomeViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false 
         scrollView.delegate = self
         return scrollView
     }()
@@ -50,8 +51,8 @@ final class HomeViewController: UIViewController {
         return collectionView
     }()
     
-    private let images = ["1", "2", "3"] // Assetlerdeki resim isimleri
-    private var games: [GameListItem] = [] // Data source for collection view
+    private let images = ["1", "2", "3"]
+    private var games: [GameListItem] = []
     private let webService = WebService()
     
     override func viewDidLoad() {
@@ -86,7 +87,7 @@ final class HomeViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/3)
+            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/4)
         ])
         
         setupScrollViewImages()
@@ -108,7 +109,7 @@ final class HomeViewController: UIViewController {
             ])
         }
         
-        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(images.count), height: view.frame.height / 3)
+        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(images.count), height: view.frame.height / 4)
     }
     
     private func configurePageControl() {
