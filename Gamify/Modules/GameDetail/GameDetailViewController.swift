@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Alamofire
+
 
 class GameDetailViewController: UIViewController {
     
@@ -154,16 +154,7 @@ class GameDetailViewController: UIViewController {
         gameReleaseLabel.text = "Release Date: \(gameDetail.released ?? "")"
         metacriticRateLabel.text = "Metacritic: \(gameDetail.metacritic ?? 5)"
         gameDescriptionLabel.text = gameDetail.description ?? "No description available."
-        
-        if let imageUrlString = gameDetail.backgroundImage, let url = URL(string: imageUrlString) {
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: url) {
-                    DispatchQueue.main.async {
-                        self.gameImageView.image = UIImage(data: data)
-                    }
-                }
-            }
-        }
+        gameImageView.loadImage(from: gameDetail.backgroundImage)
     }
 }
 

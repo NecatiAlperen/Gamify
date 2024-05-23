@@ -16,13 +16,25 @@ final class MainTabbarController: UITabBarController {
     
     private func setupTabbar() {
         tabBar.backgroundColor = .systemGray3
-        let vcFirst  = UINavigationController(rootViewController:HomeViewController())
-        let vcSecond = UINavigationController(rootViewController:FavoritesViewController())
+        
+        let homeViewController = HomeViewController()
+        let homeViewModel = HomeViewModel()
+        homeViewController.viewModel = homeViewModel
+        
+        let favoritesViewController = FavoritesViewController()
+        
+        
+        let vcFirst = UINavigationController(rootViewController: homeViewController)
+        let vcSecond = UINavigationController(rootViewController: favoritesViewController)
+        
         vcFirst.tabBarItem.image = UIImage(systemName: "gamecontroller")
         vcSecond.tabBarItem.image = UIImage(systemName: "heart")
         vcFirst.tabBarItem.title = "Games"
         vcSecond.tabBarItem.title = "Favorites"
+        
         tabBar.tintColor = .label
-        setViewControllers([vcFirst,vcSecond], animated: true)
+        
+        setViewControllers([vcFirst, vcSecond], animated: true)
     }
 }
+

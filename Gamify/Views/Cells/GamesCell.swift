@@ -82,20 +82,11 @@ class GamesCell: UICollectionViewCell {
         ])
     }
     
-    func configure(with game: GameListItem) {
-            gameNameLabel.text = game.name
-            gameRatingLabel.text = "Rating: \(game.rating)"
-            gameReleasedLabel.text = "Released: \(game.released ?? "N/A")"
-            
-            if let imageUrl = game.backgroundImage, let url = URL(string: imageUrl) {
-                DispatchQueue.global().async {
-                    if let data = try? Data(contentsOf: url) {
-                        DispatchQueue.main.async {
-                            self.gameImageView.image = UIImage(data: data)
-                        }
-                    }
-                }
-            }
+    func configure(with model: GameListItem) {
+            gameNameLabel.text = model.name
+            gameRatingLabel.text = "Rating: \(model.rating)"
+            gameReleasedLabel.text = "Released: \(model.released ?? "N/A")"
+            gameImageView.loadImage(from: model.backgroundImage)
         }
 }
 
