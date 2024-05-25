@@ -6,3 +6,31 @@
 //
 
 import Foundation
+
+protocol FavoritesViewModelDelegate: AnyObject {
+    func didUpdateFavorites()
+    func didFailWithError(_ error: Error)
+}
+
+protocol FavoritesViewModelProtocol {
+    var delegate: FavoritesViewModelDelegate? { get set }
+    var favorites: [FavoriteGame] { get }
+    func fetchFavorites()
+}
+
+final class FavoritesViewModel {
+    weak var delegate: FavoritesViewModelDelegate?
+    private(set) var favorites: [FavoriteGame] = []
+}
+
+extension FavoritesViewModel: FavoritesViewModelProtocol {
+    func fetchFavorites() {
+        do {
+            favorites = try CoreDataManager.shared.fetchFavorites()
+            delegate?.didUpdateFavorites()
+        } catch {
+            delegate?.didFailWithError(error)
+        }
+    }
+}
+

@@ -70,14 +70,6 @@ final class HomeViewController: UIViewController {
         configurePageControl()
         configureCollectionView()
         configureNoResultView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        guard let viewModel = viewModel else {
-            print("Error: viewModel is nil")
-            return
-        }
         viewModel.loadGameList()
     }
     
@@ -236,7 +228,6 @@ extension HomeViewController: HomeViewModelDelegate {
     }
     
     func didFailWithError(_ error: Error) {
-        // Hata ile ilgili kullanıcıyı bilgilendirin
         print("Error: \(error.localizedDescription)")
     }
 }
@@ -253,7 +244,7 @@ extension HomeViewController: UISearchBarDelegate {
         } else if searchText.isEmpty {
             viewModel.searchGames(with: "")
             showScrollViewAndPageControl()
-            NSLayoutConstraint.deactivate(view.constraints.filter { $0.firstItem as? UIView == collectionView && $0.firstAttribute == .top })
+            NSLayoutConstraint.deactivate(view.constraints.filter { $0.firstItem as? UIView == collectionView && $0.firstAttribute == .top }) // ZİNDEX
             NSLayoutConstraint.activate([
                 collectionView.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20)
             ])
@@ -276,5 +267,6 @@ extension HomeViewController: UISearchBarDelegate {
         pageControl.isHidden = false
     }
 }
+
 
 

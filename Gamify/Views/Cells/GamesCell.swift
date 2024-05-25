@@ -6,14 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GamesCell: UICollectionViewCell {
     
-    private let gameImageView: UIImageView = {
+    private lazy var  gameImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true 
+        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
         return imageView
     }()
@@ -83,10 +84,9 @@ class GamesCell: UICollectionViewCell {
     }
     
     func configure(with model: GameListItem) {
-            gameNameLabel.text = model.name
-            gameRatingLabel.text = "Rating: \(model.rating)"
-            gameReleasedLabel.text = "Released: \(model.released ?? "N/A")"
-            gameImageView.loadImage(from: model.backgroundImage)
-        }
+        gameNameLabel.text = model.name
+        gameRatingLabel.text = "Rating: \(model.rating)"
+        gameReleasedLabel.text = "Released: \(model.released ?? "N/A")"
+        gameImageView.loadImage(from: model.backgroundImage)
+    }
 }
-

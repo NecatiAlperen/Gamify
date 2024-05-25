@@ -9,6 +9,7 @@ import UIKit
 
 final class MainTabbarController: UITabBarController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabbar()
@@ -31,9 +32,8 @@ final class MainTabbarController: UITabBarController {
         vcSecond.tabBarItem.image = UIImage(systemName: "heart")
         vcFirst.tabBarItem.title = "Games"
         vcSecond.tabBarItem.title = "Favorites"
-        
+
         tabBar.tintColor = .label
-        
         setViewControllers([vcFirst, vcSecond], animated: true)
     }
 }

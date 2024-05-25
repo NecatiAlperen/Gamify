@@ -7,10 +7,19 @@
 
 import UIKit
 
-
 class GameDetailViewController: UIViewController {
     
-    var gameId: Int?
+    var gameId: Int? {
+        didSet {
+            if let gameId = gameId {
+                viewModel = GameDetailViewModel(gameId: gameId)
+                viewModel.delegate = self
+                viewModel.loadGameDetail()
+            }
+        }
+    }
+    
+    private var currentGameDetail: GameDetailResponse?
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -36,10 +45,11 @@ class GameDetailViewController: UIViewController {
     private let favoriteButton: UIButton = {
         let button = UIButton()
         let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold)
-        let image = UIImage(systemName: "heart", withConfiguration: config)
+        let image = UIImage(systemName: "heart.fill", withConfiguration: config)
         button.setImage(image, for: .normal)
         button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(GameDetailViewController.self, action: #selector(favoriteButtonTapped), for: .touchUpInside) 
         return button
     }()
     
@@ -91,12 +101,15 @@ class GameDetailViewController: UIViewController {
         return stackView
     }()
     
+    var viewModel: GameDetailViewModelProtocol!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         setupViews()
-        fetchGameDetail()
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.orange
     }
     
     private func setupViews() {
@@ -133,28 +146,31 @@ class GameDetailViewController: UIViewController {
         ])
     }
     
-    private func fetchGameDetail() {
-        guard let gameId = gameId else { return }
-        
-        let webService = WebService()
-        webService.fetchGameDetail(gameId: gameId) { [weak self] result in
-            switch result {
-            case .success(let gameDetail):
-                DispatchQueue.main.async {
-                    self?.configureView(with: gameDetail)
-                }
-            case .failure(let error):
-                print("Error fetching game detail: \(error)")
-            }
-        }
-    }
-    
     private func configureView(with gameDetail: GameDetailResponse) {
+        currentGameDetail = gameDetail
+        
         gameNameLabel.text = gameDetail.name
         gameReleaseLabel.text = "Release Date: \(gameDetail.released ?? "")"
-        metacriticRateLabel.text = "Metacritic: \(gameDetail.metacritic ?? 5)"
-        gameDescriptionLabel.text = gameDetail.description ?? "No description available."
+        metacriticRateLabel.text = "Metacritic: \(gameDetail.metacritic ?? 0)"
+        gameDescriptionLabel.text = gameDetail.description?.stringByRemovingHTMLTags() ?? "No description available."
         gameImageView.loadImage(from: gameDetail.backgroundImage)
+        self.title = gameDetail.name
+        
+        viewModel.checkFavoriteStatus()
+    }
+    
+    @objc private func favoriteButtonTapped() {
+        viewModel.toggleFavoriteStatus()
+    }
+}
+
+extension GameDetailViewController: GameDetailViewModelDelegate {
+    func didLoadGameDetail(_ gameDetail: GameDetailResponse) {
+        configureView(with: gameDetail)
+    }
+    
+    func changeFavoriteButtonColor(isFavorite: Bool) {
+        favoriteButton.tintColor = isFavorite ? .red : .white
     }
 }
 

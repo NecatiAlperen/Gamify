@@ -24,7 +24,7 @@ struct GameListItem: Codable {
     let rating: Double
 
     enum CodingKeys: String, CodingKey {
-        case id, name, released
+        case id,name, released
         case backgroundImage = "background_image"
         case rating
     }

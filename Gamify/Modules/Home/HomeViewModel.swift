@@ -22,6 +22,7 @@ protocol HomeViewModelProtocol {
     func gameList(index: IndexPath) -> GameListItem?
     func searchGames(with query: String)
     func resetGames()
+    
 }
 
 final class HomeViewModel {

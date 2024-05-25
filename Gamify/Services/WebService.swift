@@ -9,11 +9,12 @@ import Foundation
 import Alamofire
 
 class WebService {
+    
     private let apiKey = "9e695f35cca74deca083634327de5b5c"
     
     func fetchGameList(page: Int = 1, completion: @escaping (Result<[GameListItem], Error>) -> Void) {
         let url = "https://api.rawg.io/api/games?key=\(apiKey)&page=\(page)"
-        
+        print("asdas")
         AF.request(url).responseDecodable(of: GameListResponse.self) { response in
             switch response.result {
             case .success(let gameListResponse):
