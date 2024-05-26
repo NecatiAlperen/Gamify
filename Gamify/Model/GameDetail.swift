@@ -1,16 +1,11 @@
-//
 //  GameDetail.swift
 //  Gamify
 //
 //  Created by Necati Alperen IŞIK on 19.05.2024.
 //
 
-
-
-
 import Foundation
-
-// MARK: - GameDetailResponse
+//MARK: -- GameDetailResponse
 struct GameDetailResponse: Codable {
     let id: Int
     let name: String
@@ -21,17 +16,18 @@ struct GameDetailResponse: Codable {
     let metacritic: Int?
     let playtime: Int?
     let genres: [GameDetailGenre]
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, released
         case backgroundImage = "background_image"
         case rating, description, metacritic, playtime, genres
     }
 }
-
-// MARK: - GameDetailGenre
+//MARK: -- GameDetailGenre
 struct GameDetailGenre: Codable {
     let id: Int
     let name: String
 }
+
+
 

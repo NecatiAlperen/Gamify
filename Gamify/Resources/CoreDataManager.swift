@@ -50,7 +50,7 @@ final class CoreDataManager {
         let favoriteGame = FavoriteGame(context: context)
         favoriteGame.name = gameDetail.name
         favoriteGame.backgroundImageURL = gameDetail.backgroundImage
-        favoriteGame.rating = Double(gameDetail.metacritic ?? 0)
+        favoriteGame.rating = gameDetail.rating 
         favoriteGame.releaseDate = gameDetail.released
         
         saveContext()
@@ -59,6 +59,19 @@ final class CoreDataManager {
     func deleteFavoriteGame(_ favoriteGame: FavoriteGame) {
         context.delete(favoriteGame)
         saveContext()
+    }
+    
+    func deleteAllFavorites() throws {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = FavoriteGame.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            saveContext()
+        } catch {
+            print("Failed to delete all favorites: \(error)")
+            throw error
+        }
     }
     
     private func saveContext() {

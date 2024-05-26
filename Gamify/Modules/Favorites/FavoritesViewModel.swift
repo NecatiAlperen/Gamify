@@ -16,6 +16,7 @@ protocol FavoritesViewModelProtocol {
     var delegate: FavoritesViewModelDelegate? { get set }
     var favorites: [FavoriteGame] { get }
     func fetchFavorites()
+    func deleteAllFavorites()
 }
 
 final class FavoritesViewModel {
@@ -32,5 +33,16 @@ extension FavoritesViewModel: FavoritesViewModelProtocol {
             delegate?.didFailWithError(error)
         }
     }
+    
+    func deleteAllFavorites() {
+        do {
+            try CoreDataManager.shared.deleteAllFavorites()
+            favorites.removeAll()
+            delegate?.didUpdateFavorites()
+        } catch {
+            delegate?.didFailWithError(error)
+        }
+    }
 }
+
 

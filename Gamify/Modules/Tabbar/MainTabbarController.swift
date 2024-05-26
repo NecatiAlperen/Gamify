@@ -24,7 +24,6 @@ final class MainTabbarController: UITabBarController {
         
         let favoritesViewController = FavoritesViewController()
         
-        
         let vcFirst = UINavigationController(rootViewController: homeViewController)
         let vcSecond = UINavigationController(rootViewController: favoritesViewController)
         

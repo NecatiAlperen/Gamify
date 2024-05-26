@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B338E7A2C03859300C6310B /* CGFloat + Extension .swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B338E792C03859300C6310B /* CGFloat + Extension .swift */; };
+		3B338E7C2C03A2B100C6310B /* ScreenShotsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B338E7B2C03A2B100C6310B /* ScreenShotsCell.swift */; };
 		3B526EC62BFFEDF2002CD71C /* NoResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B526EC52BFFEDF2002CD71C /* NoResultView.swift */; };
 		3B6C5F2C2BFC23A800F908CE /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6C5F2B2BFC23A800F908CE /* UIView + Extension.swift */; };
 		3BD575522BFA4AB8008C09D1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3BD575512BFA4AB8008C09D1 /* Alamofire */; };
@@ -36,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B338E792C03859300C6310B /* CGFloat + Extension .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat + Extension .swift"; sourceTree = "<group>"; };
+		3B338E7B2C03A2B100C6310B /* ScreenShotsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotsCell.swift; sourceTree = "<group>"; };
 		3B526EC52BFFEDF2002CD71C /* NoResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultView.swift; sourceTree = "<group>"; };
 		3B6C5F2B2BFC23A800F908CE /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		3BD575532BFA4C18008C09D1 /* GameDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetail.swift; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 				3B6C5F2B2BFC23A800F908CE /* UIView + Extension.swift */,
 				3BED58EE2C02814B00A3D90E /* UIImageView + Extension.swift */,
 				3BED58F22C0296F500A3D90E /* String + Extension.swift */,
+				3B338E792C03859300C6310B /* CGFloat + Extension .swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -99,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				3BD575582BFA653F008C09D1 /* GamesCell.swift */,
+				3B338E7B2C03A2B100C6310B /* ScreenShotsCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -305,8 +311,10 @@
 				3BDBF5BB2BF8308B00C2BC03 /* ViewController.swift in Sources */,
 				3BED58EF2C02814B00A3D90E /* UIImageView + Extension.swift in Sources */,
 				3B526EC62BFFEDF2002CD71C /* NoResultView.swift in Sources */,
+				3B338E7A2C03859300C6310B /* CGFloat + Extension .swift in Sources */,
 				3BED58EA2C021D8F00A3D90E /* FavoriteGame+CoreDataProperties.swift in Sources */,
 				3B6C5F2C2BFC23A800F908CE /* UIView + Extension.swift in Sources */,
+				3B338E7C2C03A2B100C6310B /* ScreenShotsCell.swift in Sources */,
 				3BDBF5D62BF834CA00C2BC03 /* FavoritesViewController.swift in Sources */,
 				3BDBF5D22BF8335500C2BC03 /* MainTabbarController.swift in Sources */,
 				3BD575592BFA653F008C09D1 /* GamesCell.swift in Sources */,

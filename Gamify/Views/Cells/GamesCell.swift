@@ -6,35 +6,50 @@
 //
 
 import UIKit
-import Kingfisher
 
-class GamesCell: UICollectionViewCell {
+final class GamesCell: UICollectionViewCell {
     
-    private lazy var  gameImageView: UIImageView = {
+//MARK: -- UI COMPONENTS
+    private lazy var gameImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        imageView.layer.cornerRadius = 15
+        imageView.layer.masksToBounds = true
+        imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 90).isActive = true
         return imageView
     }()
-    
     private let gameNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+    private lazy var ratingImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "star.fill")
+        imageView.tintColor = .orange
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     private let gameRatingLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+    private lazy var releasedImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "calendar")
+        imageView.tintColor = .orange
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     private let gameReleasedLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
@@ -42,24 +57,36 @@ class GamesCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    private lazy var labelsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [gameRatingLabel, gameReleasedLabel])
+    private lazy var ratingStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [ratingImageView, gameRatingLabel])
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [gameNameLabel, labelsStackView])
-        stackView.axis = .vertical
         stackView.spacing = 4
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
+    private lazy var releasedStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [releasedImageView, gameReleasedLabel])
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    private lazy var labelsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [ratingStackView, releasedStackView])
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 2
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    private lazy var mainStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [gameNameLabel, labelsStackView])
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+//MARK: -- LIFE CYCLES
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -68,7 +95,7 @@ class GamesCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+//MARK: -- FUNCTIONS
     private func setupViews() {
         contentView.addSubview(gameImageView)
         contentView.addSubview(mainStackView)
@@ -85,8 +112,9 @@ class GamesCell: UICollectionViewCell {
     
     func configure(with model: GameListItem) {
         gameNameLabel.text = model.name
-        gameRatingLabel.text = "Rating: \(model.rating)"
-        gameReleasedLabel.text = "Released: \(model.released ?? "N/A")"
+        gameRatingLabel.text = "\(model.rating)"
+        gameReleasedLabel.text = model.released ?? "N/A"
         gameImageView.loadImage(from: model.backgroundImage)
     }
 }
+

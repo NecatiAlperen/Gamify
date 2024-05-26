@@ -22,7 +22,6 @@ protocol HomeViewModelProtocol {
     func gameList(index: IndexPath) -> GameListItem?
     func searchGames(with query: String)
     func resetGames()
-    
 }
 
 final class HomeViewModel {
@@ -61,7 +60,6 @@ final class HomeViewModel {
             }
         }
     }
-
     func searchGames(with query: String) {
         if query.count < 3 {
             searching = false
@@ -72,7 +70,6 @@ final class HomeViewModel {
         }
         delegate?.reloadData()
     }
-
     func resetGames() {
         games = []
         currentPage = 1

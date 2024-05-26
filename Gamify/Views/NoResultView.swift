@@ -4,18 +4,21 @@
 //
 //  Created by Necati Alperen IŞIK on 24.05.2024.
 //
+
+
+
 import UIKit
 
 final class NoResultView: UIView {
     
-    private let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.image = .noresult
         return imageView
     }()
     
-    private let messageLabel: UILabel = {
+    private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .gray
@@ -42,13 +45,19 @@ final class NoResultView: UIView {
         
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -50),
-            imageView.widthAnchor.constraint(equalToConstant: 400),
-            imageView.heightAnchor.constraint(equalToConstant: 400),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor,constant: -50),
+            imageView.widthAnchor.constraint(equalToConstant: screenWidth * 0.8),
+            imageView.heightAnchor.constraint(equalToConstant: screenHeigth * 0.5),
             
             messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
     }
+    
+    func configure(image: UIImage?, message: String) {
+        imageView.image = image
+        messageLabel.text = message
+    }
 }
+

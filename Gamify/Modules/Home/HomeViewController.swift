@@ -5,17 +5,30 @@
 //
 
 import UIKit
-import Alamofire
 
 final class HomeViewController: UIViewController {
     
+    // MARK: -- VARIABLES
+    var viewModel: HomeViewModelProtocol! {
+        didSet {
+            viewModel.delegate = self
+        }
+    }
+    // MARK: -- UI COMPONENTS
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 26)
+        label.text = "Gamify"
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         return searchBar
     }()
-    
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.currentPage = 0
@@ -24,7 +37,14 @@ final class HomeViewController: UIViewController {
         pageControl.addTarget(self, action: #selector(pageControlChanged(_:)), for: .valueChanged)
         return pageControl
     }()
-    
+    private lazy var exploreAllLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.text = "Explore All Games"
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
@@ -33,7 +53,6 @@ final class HomeViewController: UIViewController {
         scrollView.delegate = self
         return scrollView
     }()
-    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -47,7 +66,6 @@ final class HomeViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
     private lazy var noResultView: NoResultView = {
         let noResultView = NoResultView()
         noResultView.isHidden = true
@@ -55,42 +73,47 @@ final class HomeViewController: UIViewController {
         return noResultView
     }()
     
-    var viewModel: HomeViewModelProtocol! {
-        didSet {
-            viewModel.delegate = self
-        }
-    }
-    
+    // MARK: -- LIFE CYCLES
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        configureTitleLabel()
         configureSearchBar()
         configureScrollView()
         configurePageControl()
+        configureExploreAllLabel()
         configureCollectionView()
         configureNoResultView()
         viewModel.loadGameList()
     }
-    
+    // MARK: -- FUNCTIONS
+    private func configureTitleLabel() {
+        view.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+        ])
+    }
     private func configureSearchBar() {
         view.addSubview(searchBar)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            searchBar.heightAnchor.constraint(equalToConstant: 50)
+            searchBar.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
-    
     private func configureScrollView() {
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            scrollView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 4),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/4)
@@ -98,7 +121,6 @@ final class HomeViewController: UIViewController {
         
         setupScrollViewImages()
     }
-    
     private func setupScrollViewImages() {
         scrollView.subviews.forEach { $0.removeFromSuperview() }
         let images = viewModel.firstThreeImage
@@ -112,47 +134,53 @@ final class HomeViewController: UIViewController {
             
             NSLayoutConstraint.activate([
                 imageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
+                imageView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
                 imageView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-                imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: CGFloat(index) * view.frame.width)
+                imageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: CGFloat(index) * view.frame.width + 10)
             ])
         }
         
-        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(images.count), height: view.frame.height / 4)
+        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(images.count), height: scrollView.frame.height)
         pageControl.numberOfPages = images.count
     }
-    
     private func configurePageControl() {
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 4),
             pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageControl.heightAnchor.constraint(equalToConstant: 50)
+            pageControl.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
-    
+    private func configureExploreAllLabel() {
+        view.addSubview(exploreAllLabel)
+        exploreAllLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            exploreAllLabel.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 8),
+            exploreAllLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+        ])
+    }
     private func configureCollectionView() {
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            collectionView.topAnchor.constraint(equalTo: exploreAllLabel.bottomAnchor, constant: 16),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
         ])
     }
-    
     private func configureNoResultView() {
         view.addSubview(noResultView)
         NSLayoutConstraint.activate([
-            noResultView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20),
-            noResultView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            noResultView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            noResultView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            noResultView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 16),
+            noResultView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            noResultView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            noResultView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
         ])
     }
     
@@ -165,10 +193,11 @@ final class HomeViewController: UIViewController {
     private func showGameDetail(for game: GameListItem) {
         let detailVC = GameDetailViewController()
         detailVC.gameId = game.id
+        detailVC.gameListItem = game
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
-
+// MARK: -- EXTENSIONS
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.width
@@ -221,9 +250,11 @@ extension HomeViewController: HomeViewModelDelegate {
         if viewModel.numberOfItems == 0 && viewModel.isSearching {
             noResultView.isHidden = false
             collectionView.isHidden = true
+            exploreAllLabel.isHidden = true
         } else {
             noResultView.isHidden = true
             collectionView.isHidden = false
+            exploreAllLabel.isHidden = false
         }
     }
     
@@ -244,9 +275,10 @@ extension HomeViewController: UISearchBarDelegate {
         } else if searchText.isEmpty {
             viewModel.searchGames(with: "")
             showScrollViewAndPageControl()
-            NSLayoutConstraint.deactivate(view.constraints.filter { $0.firstItem as? UIView == collectionView && $0.firstAttribute == .top }) // ZİNDEX
+            NSLayoutConstraint.deactivate(view.constraints.filter { $0.firstItem as? UIView == collectionView && $0.firstAttribute == .top })
             NSLayoutConstraint.activate([
-                collectionView.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20)
+                exploreAllLabel.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 8),
+                collectionView.topAnchor.constraint(equalTo: exploreAllLabel.bottomAnchor, constant: 16)
             ])
             setupScrollViewImages()
             pageControl.numberOfPages = viewModel.firstThreeImage.count
@@ -267,6 +299,4 @@ extension HomeViewController: UISearchBarDelegate {
         pageControl.isHidden = false
     }
 }
-
-
 
